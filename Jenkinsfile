@@ -1,5 +1,7 @@
 pipeline {
-    agent linux
+    agent {
+        linux
+    }
     environment {
         MAVEN_HOME = tool name: 'maven', type: 'maven'
     }
