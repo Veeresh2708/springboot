@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent linux
     environment {
         MAVEN_HOME = tool name: 'maven', type: 'maven'
     }
@@ -16,12 +16,19 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '${MAVEN_HOME}/bin/mvn clean package'
+                sh '${MAVEN_HOME}/bin/mvn clean package -DskipTests=true'
+                archive 'target/*.jar'
             }
         }
         stage('Unit Tests') {
             steps {
-                sh '${MAVEN_HOME}/bin/mvn test'
+                sh '${MAVEN_HOME}/bin/mvn test jacoco:report'
+            }
+            post {
+                always {
+                junit 'target/surefire-reports/*.xml'
+                jacoco execPattern: 'target/jacoco.exec'
+                }
             }
         }
     }
