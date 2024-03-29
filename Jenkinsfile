@@ -19,5 +19,10 @@ pipeline {
                 sh '${MAVEN_HOME}/bin/mvn clean package'
             }
         }
+        stage('Unit Tests') {
+            steps {
+                sh '${MAVEN_HOME}/bin/mvn test'
+            }
+        }
     }
 }
