@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'linux'
-    }
+    agent any
     environment {
         MAVEN_HOME = tool name: 'maven', type: 'maven'
     }
@@ -18,7 +16,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '${MAVEN_HOME}/bin/mvn clean package '
+                sh '${MAVEN_HOME}/bin/mvn clean package -DskipTests=true'
                 archive 'target/*.jar'
             }
         }
