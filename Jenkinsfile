@@ -18,7 +18,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                sh '${MAVEN_HOME}/bin/mvn clean package -DskipTests=true'
+                sh '${MAVEN_HOME}/bin/mvn clean package '
                 archive 'target/*.jar'
             }
         }
